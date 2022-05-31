@@ -1,0 +1,34 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb/base",
+        "prettier",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 11,
+        "requireConfigFile": false,
+        "babelOptions": {
+            "presets": [
+                "@babel/preset-react"
+            ]
+        }
+    },
+    "parser": "@babel/eslint-parser",
+    "plugins": [
+        "react",
+        "prettier"
+    ],
+    "rules": {
+        "no-plusplus": "off",
+        "import/extensions": "off",
+        "import/no-unresolved": "off",
+        "arrow-body-style": "off",
+        "object-shorthand": "off",
+        "no-underscore-dangle": "off"
+    }
+}
