@@ -1,0 +1,8 @@
+.app {
+    padding: 20px 32px;
+    background-color: white;
+}
+
+.ant-typography kbd {
+    margin: 0;
+}
