@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Row, Col, Card, Image, Typography } from "antd";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import Overview from "../overview";
+
 function FilmCard({ title, overview, poster, date }) {
-  console.log(parse(date, "yyyy-MM-dd", new Date()), title);
   const { Title, Text } = Typography;
   return (
     <Card hoverable bodyStyle={{ padding: 0 }}>
@@ -44,5 +45,19 @@ function FilmCard({ title, overview, poster, date }) {
     </Card>
   );
 }
+
+FilmCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  overview: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  poster: PropTypes.string,
+};
+
+FilmCard.defaultProps = {
+  title: "",
+  overview: "",
+  date: "",
+  poster: "",
+};
 
 export default FilmCard;

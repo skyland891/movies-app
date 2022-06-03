@@ -29,6 +29,7 @@
         "import/no-unresolved": "off",
         "arrow-body-style": "off",
         "object-shorthand": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "no-useless-catch": "off"
     }
 }

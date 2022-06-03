@@ -5,18 +5,32 @@ export default class MovieDBService {
   }
 
   async getResource(endpointURL, queryParams) {
-    const response = await fetch(
-      `${this.url + endpointURL}?api_key=${this._apiKey}${queryParams}`
-    );
+    let response;
+    try {
+      response = await fetch(
+        `${this.url + endpointURL}?api_key=${this._apiKey}${queryParams}`
+      );
+    } catch (error) {
+      throw error;
+    }
+
     return response;
   }
 
   async getByKeywords(keywords) {
-    const response = await this.getResource(
-      "/search/movie",
-      `&query=${keywords}&page=1`
-    );
-    const movieList = await response.json();
+    let movieList = [];
+    try {
+      const response = await this.getResource(
+        "/search/movie",
+        `&query=${keywords}&page=1`
+      );
+      if (response.status === 404) {
+        throw new Error();
+      }
+      movieList = await response.json();
+    } catch (error) {
+      throw error;
+    }
     return movieList;
   }
 }
