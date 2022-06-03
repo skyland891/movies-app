@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const cutToSpace = (text) => {
   const textArr = text.split(" ");
@@ -19,6 +20,14 @@ class Overview extends React.Component {
     this.maxCharCount = 40;
   }
 
+  static propTypes = {
+    overview: PropTypes.string.isRequired,
+  };
+
+  static defaultProps = {
+    overview: "",
+  };
+
   ellipsis = (text) => {
     let endFlag = false;
     const textArr = text.split("");
@@ -33,13 +42,13 @@ class Overview extends React.Component {
           if (lineCount === this.maxLineCount - 1) {
             newText += "\n";
           } else {
-            newText += "\n" + cutElement;
+            newText += "\n";
+            newText += cutElement;
           }
           lineCount += 1;
         }
       } else if (!endFlag) {
         endFlag = true;
-        console.log(cutElement);
         newText += "...";
       }
     });

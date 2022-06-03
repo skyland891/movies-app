@@ -20,6 +20,7 @@
     "husky": "^8.0.1",
     "lint-staged": "^12.4.3",
     "prettier": "^2.6.2",
+    "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
@@ -33,12 +34,6 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "format": "prettier --write \"./**/*.{js,jsx,json}\""
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
