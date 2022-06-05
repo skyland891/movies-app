@@ -4,7 +4,7 @@ export default class MovieDBService {
     this.url = `https://api.themoviedb.org/3`;
   }
 
-  async getResource(endpointURL, queryParams) {
+  async getResource(endpointURL = "", queryParams = "") {
     let response;
     try {
       response = await fetch(
@@ -17,12 +17,12 @@ export default class MovieDBService {
     return response;
   }
 
-  async getByKeywords(keywords) {
+  async getByKeywords(keywords, page = 1) {
     let movieList = [];
     try {
       const response = await this.getResource(
         "/search/movie",
-        `&query=${keywords}&page=1`
+        `&query=${keywords}&page=${page}`
       );
       if (response.status === 404) {
         throw new Error();
