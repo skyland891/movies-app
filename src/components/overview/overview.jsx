@@ -16,7 +16,7 @@ class Overview extends React.Component {
     this.state = {
       text: "",
     };
-    this.maxLineCount = 5;
+    this.maxLineCount = 4;
     this.maxCharCount = 40;
   }
 

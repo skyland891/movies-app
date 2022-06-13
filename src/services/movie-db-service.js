@@ -33,4 +33,18 @@ export default class MovieDBService {
     }
     return movieList;
   }
+
+  async getGenresList() {
+    let genreList = [];
+    try {
+      const response = await this.getResource("/genre/movie/list");
+      if (response.status === 404) {
+        throw new Error();
+      }
+      genreList = await response.json();
+    } catch (error) {
+      throw error;
+    }
+    return genreList;
+  }
 }
