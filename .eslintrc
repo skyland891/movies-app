@@ -30,6 +30,8 @@
         "arrow-body-style": "off",
         "object-shorthand": "off",
         "no-underscore-dangle": "off",
-        "no-useless-catch": "off"
+        "no-useless-catch": "off",
+        "no-debugger": "off",
+        "class-methods-use-this": "off"
     }
 }
