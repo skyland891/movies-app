@@ -141,6 +141,9 @@ class App extends React.Component {
   };
 
   ratedFilter = (movies) => {
+    if(!localStorage.ratedMovies) {
+      localStorage.ratedMovies = JSON.stringify([]);
+    }
     const ratedMovs = JSON.parse(localStorage.ratedMovies);
     return movies.map((movie) => {
       const ratedMov = ratedMovs.find(
