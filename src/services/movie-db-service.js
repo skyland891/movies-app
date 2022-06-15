@@ -1,6 +1,6 @@
 export default class MovieDBService {
   constructor() {
-    this._apiKey = "5f60410837d49afcfda25f3223d55468";
+    this._apiKey = process.env.REACT_APP_TMDB_API_KEY;
     this.url = `https://api.themoviedb.org/3`;
   }
 

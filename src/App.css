@@ -1,6 +1,8 @@
 .app {
     padding: 20px 32px;
     background-color: white;
+    width: 1010px;
+    min-height: 100vh;
 }
 
 .ant-typography kbd {
