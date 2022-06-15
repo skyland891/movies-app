@@ -42,7 +42,13 @@ function FilmCard({
         const getGenresById = (ids) => {
           const genres = [...genresList];
           return ids.map((genreId) => {
-            return genres.find((genre) => genre.id === genreId).name;
+            const genreName = genres.find(
+              (genre) => genre.id === genreId
+            )?.name;
+            if (genreName) {
+              return genreName;
+            }
+            return null;
           });
         };
 
@@ -54,6 +60,7 @@ function FilmCard({
                   width={183}
                   height={281}
                   src={`https://image.tmdb.org/t/p/w500${poster}`}
+                  fallback={"https://via.placeholder.com/183x281"}
                 />
               </Col>
               <Col
@@ -88,7 +95,7 @@ function FilmCard({
                   }}
                 >
                   {getGenresById(genreIds).map((genre, index) => {
-                    if (index > 1) {
+                    if (index > 1 || !genre) {
                       return null;
                     }
                     return (

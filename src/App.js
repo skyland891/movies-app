@@ -141,7 +141,7 @@ class App extends React.Component {
   };
 
   ratedFilter = (movies) => {
-    if(!localStorage.ratedMovies) {
+    if (!localStorage.ratedMovies) {
       localStorage.ratedMovies = JSON.stringify([]);
     }
     const ratedMovs = JSON.parse(localStorage.ratedMovies);
@@ -176,21 +176,88 @@ class App extends React.Component {
     const films = hasData ? (
       <FilmsView
         movies={newMovies}
-        value={inputValue}
-        changeHandle={this.changeHandle}
-        totalMovies={totalMovies}
-        pageChange={this.pageChange}
-        currentPage={currentPage}
         changeRaiting={this.changeRaiting}
         genresList={genresList}
       />
     ) : null;
 
+    const ratedMovies = JSON.parse(localStorage.ratedMovies);
+
     return (
       <div className="app">
-        {errorMessage}
-        {loader}
-        {films}
+        <GenreProvider value={genresList}>
+          <Col>
+            <Row justify="center" style={{ marginBottom: 20 }}>
+              <Tabs centered defaultActiveKey="1">
+                <TabPane tab="Search" key="1">
+                  <Col>
+                    <Row justify="center" style={{ marginBottom: 32 }}>
+                      <SearchInput
+                        value={inputValue}
+                        changeHandle={this.changeHandle}
+                      />
+                    </Row>
+                    <Row>
+                      {errorMessage}
+                      {loader}
+                      {films}
+                    </Row>
+                    <Row justify="center">
+                      <Pagination
+                        current={currentPage}
+                        defaultCurrent={1}
+                        defaultPageSize={20}
+                        total={totalMovies}
+                        onChange={this.pageChange}
+                      />
+                    </Row>
+                  </Col>
+                </TabPane>
+                <TabPane tab="Rated" key="2">
+                  <Row>
+                    <Row
+                      wrap
+                      gutter={[35, 35]}
+                      justify={"center"}
+                      style={{ marginBottom: 40 }}
+                    >
+                      {ratedMovies.length === 0 ? (
+                        <div
+                          style={{
+                            ...wrapperStyle,
+                            width: "100%",
+                            height: "100%",
+                            paddingTop: 380,
+                            fontSize: 24,
+                          }}
+                        >
+                          Movies not founded
+                        </div>
+                      ) : (
+                        ratedMovies.map((movie) => (
+                          <Col key={movie.id}>
+                            <FilmCard
+                              id={movie.id}
+                              title={movie.title}
+                              overview={movie.overview}
+                              poster={movie.poster_path}
+                              date={movie.release_date}
+                              raiting={movie.vote_average}
+                              ownMark={movie.raiting}
+                              changeRaiting={this.changeRaiting}
+                              genreIds={movie.genre_ids}
+                              rated
+                            />
+                          </Col>
+                        ))
+                      )}
+                    </Row>
+                  </Row>
+                </TabPane>
+              </Tabs>
+            </Row>
+          </Col>
+        </GenreProvider>
       </div>
     );
   }
@@ -212,113 +279,40 @@ const Loader = () => {
   );
 };
 
-const FilmsView = ({
-  movies,
-  value,
-  changeHandle,
-  totalMovies,
-  pageChange,
-  currentPage,
-  changeRaiting,
-  genresList,
-}) => {
-  const ratedMovies = JSON.parse(localStorage.ratedMovies);
+const FilmsView = ({ movies, changeRaiting }) => {
   return (
-    <GenreProvider value={genresList}>
-      <Col>
-        <Row justify="center" style={{ marginBottom: 20 }}>
-          <Tabs centered defaultActiveKey="1">
-            <TabPane tab="Search" key="1">
-              <Col>
-                <Row justify="center" style={{ marginBottom: 32 }}>
-                  <SearchInput value={value} changeHandle={changeHandle} />
-                </Row>
-                <Row>
-                  <Row
-                    wrap
-                    gutter={[35, 35]}
-                    justify={"center"}
-                    style={{ marginBottom: 40 }}
-                  >
-                    {movies.length === 0 ? (
-                      <div
-                        style={{
-                          ...wrapperStyle,
-                          width: "100%",
-                          height: "100",
-                        }}
-                      >
-                        Movies not founded
-                      </div>
-                    ) : (
-                      movies.map((movie) => (
-                        <Col key={movie.id}>
-                          <FilmCard
-                            id={movie.id}
-                            title={movie.title}
-                            overview={movie.overview}
-                            poster={movie.poster_path}
-                            date={movie.release_date}
-                            raiting={movie.vote_average}
-                            ownMark={movie.rating}
-                            changeRaiting={changeRaiting}
-                            genreIds={movie.genre_ids}
-                          />
-                        </Col>
-                      ))
-                    )}
-                  </Row>
-                </Row>
-                <Row justify="center">
-                  <Pagination
-                    current={currentPage}
-                    defaultCurrent={1}
-                    defaultPageSize={20}
-                    total={totalMovies}
-                    onChange={pageChange}
-                  />
-                </Row>
-              </Col>
-            </TabPane>
-            <TabPane tab="Rated" key="2">
-              <Row>
-                <Row
-                  wrap
-                  gutter={[35, 35]}
-                  justify={"center"}
-                  style={{ marginBottom: 40 }}
-                >
-                  {ratedMovies.length === 0 ? (
-                    <div
-                      style={{ ...wrapperStyle, width: "100%", height: "100" }}
-                    >
-                      Movies not founded
-                    </div>
-                  ) : (
-                    ratedMovies.map((movie) => (
-                      <Col key={movie.id}>
-                        <FilmCard
-                          id={movie.id}
-                          title={movie.title}
-                          overview={movie.overview}
-                          poster={movie.poster_path}
-                          date={movie.release_date}
-                          raiting={movie.vote_average}
-                          ownMark={movie.raiting}
-                          changeRaiting={changeRaiting}
-                          genreIds={movie.genre_ids}
-                          rated
-                        />
-                      </Col>
-                    ))
-                  )}
-                </Row>
-              </Row>
-            </TabPane>
-          </Tabs>
-        </Row>
-      </Col>
-    </GenreProvider>
+    <Row wrap gutter={[35, 35]} justify={"center"} style={{ marginBottom: 40 }}>
+      {movies.length === 0 ? (
+        <div
+          style={{
+            ...wrapperStyle,
+            width: "100%",
+            height: "100%",
+            paddingTop: 50,
+            marginBottom: 620,
+            fontSize: 24,
+          }}
+        >
+          Movies not founded
+        </div>
+      ) : (
+        movies.map((movie) => (
+          <Col key={movie.id}>
+            <FilmCard
+              id={movie.id}
+              title={movie.title}
+              overview={movie.overview}
+              poster={movie.poster_path}
+              date={movie.release_date}
+              raiting={movie.vote_average}
+              ownMark={movie.rating}
+              changeRaiting={changeRaiting}
+              genreIds={movie.genre_ids}
+            />
+          </Col>
+        ))
+      )}
+    </Row>
   );
 };
 
